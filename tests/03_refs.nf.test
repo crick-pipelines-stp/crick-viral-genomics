@@ -110,7 +110,7 @@ nextflow_pipeline {
         }
     }
 
-        test("refs_annotate_flu_ref") {
+    test("refs_annotate_flu_ref") {
         tag "refs/annotate_flu_ref"
         when {
             params {
@@ -120,6 +120,34 @@ nextflow_pipeline {
                 outdir      = "$outputDir"
                 viral_fasta = "$projectDir/tests/data/seq_sim/H1N1_NA_Uk/*"
                 samplesheet = "$projectDir/tests/data/samplesheets/test_illumina_flu_amp_single.csv"
+            }
+        }
+        then {
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
+            def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
+            assertAll(
+                { assert workflow.success},
+                { assert snapshot(
+                    workflow.trace.succeeded().size(),
+                    stable_name,
+                    stable_path
+                ).match() }
+            )
+        }
+    }
+
+    test("refs_snapgene_convert") {
+        tag "refs/refs_snapgene_convert"
+        when {
+            params {
+                run_snpeff       = false
+                run_reporting    = false
+                convert_snapgene = true
+
+                outdir      = "$outputDir"
+                viral_fasta = "$projectDir/data/refs/covid/SARS-CoV-2.fasta"
+                viral_gff   = "$projectDir/tests/data/aav/test_snapgene_features.txt"
+                samplesheet = "$projectDir/tests/data/samplesheets/test_nanopore_cov_amp_min.csv"
             }
         }
         then {

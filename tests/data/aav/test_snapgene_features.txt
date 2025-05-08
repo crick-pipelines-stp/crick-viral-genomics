@@ -1,0 +1,16 @@
+Functional equivalent of wild-type AAV2 ITR_AAV...	1..130    	130 	=>	repeat_region
+EF-1-alpha core promoter                          	191..402  	212 	=>	promoter     
+Kozak sequence                                    	410..419  	10  	==	regulatory   
+Myc                                               	419..448  	30  	=>	CDS          
+SV40 NLS                                          	452..472  	21  	=>	CDS          
+Cas9                                              	482..4582 	4101	=>	CDS          
+Cas9                                              	482..4582 	4101	=>	CDS          
+SV40 NLS                                          	4586..4606	21  	=>	CDS          
+poly(A) signal                                    	4625..4673	49  	==	polyA_signal 
+L264 U6_fwd                                       	4655..4700	46  	=>	primer_bind  
+gRNA scaffold                                     	4765..4840	76  	<=	misc_RNA     
+U6 promoter                                       	4867..5107	241 	<=	promoter     
+L264 U6_rev                                       	5090..5133	44  	<=	primer_bind  
+source                                            	5114..5113	5256	==	source       
+source                                            	5114..5113	5256	==	source       
+AAV2 ITR                                          	5116..5256	141 	==	repeat_region

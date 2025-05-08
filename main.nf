@@ -172,7 +172,8 @@ workflow {
     }
     ch_viral_gff = [[],[]]
     if(params.viral_gff) {
-        ch_viral_gff = file(params.viral_gff, checkIfExists: true)
+        // ch_viral_gff = file(params.viral_gff, checkIfExists: true)
+        ch_viral_gff = Channel.of(file(params.viral_gff, checkIfExists: true)).map{[[id:"gff"], it]}
     }
 
     //////////////////////////////////////
@@ -293,31 +294,40 @@ workflow {
         ch_viral_fasta = ch_fastq
             .map{
                 def ref = file(it[0].ref, checkIfExists: true)
-                [[id:it[0].id], [ref]]
+                [[id:it[0].id], ref]
             }
     }
     if(params.use_independant_gff) {
-        // Extract the ref name from the fasta file
-        ch_viral_fasta_ref_name = ch_viral_fasta
-            .map { meta, fasta ->
-                def firstLine = fasta[0].withReader { reader -> reader.readLine() }
-                firstLine = firstLine.replaceFirst('^>', '')
-                [meta, firstLine]
-            }
-
-        // Join with gff for contig naming
+        // Load GFF
         ch_viral_gff = ch_fastq
             .map{
                 def gff = file(it[0].gff, checkIfExists: true)
                 [[id:it[0].id], [gff]]
             }
-            .join(ch_viral_fasta_ref_name)
     }
 
-    //
-    // MODULE: Convert snapgene to gff if required
-    //
     if(params.convert_snapgene) {
+        // Extract the ref name from the fasta file
+        ch_viral_fasta_ref_name = ch_viral_fasta
+            .map { meta, fasta ->
+                def firstLine = fasta.withReader { reader -> reader.readLine() }
+                firstLine = firstLine.replaceFirst('^>', '')
+                [meta, firstLine]
+            }
+
+        // Join with gff for contig naming
+        if(params.use_independant_refs) {
+            ch_viral_gff = ch_viral_gff.join(ch_viral_fasta_ref_name)
+        }
+        else {
+            ch_viral_gff = ch_viral_gff
+                .combine(ch_viral_fasta_ref_name)
+                .map{ [it[0], it[1], it[3]]}
+        }
+
+        //
+        // MODULE: Convert snapgene to gff if required
+        //
         SNAPGENE_TO_GFF (
             ch_viral_gff
         )
@@ -882,7 +892,7 @@ workflow {
         ch_viral_gff = ch_viral_gff.collect()
     }
     else if(!multi_ref && is_gff) {
-        ch_viral_gff = Channel.of(ch_viral_gff).map{[[], it]}.collect()
+        ch_viral_gff = ch_viral_gff.collect()
     }
     else if (multi_ref && is_gff) {
         ch_con_ref_gff = ch_consensus
@@ -909,7 +919,7 @@ workflow {
         ch_multiqc_files = ch_multiqc_files.mix(QUAST.out.tsv.collect{it[1]})
     }
 
-    if(params.viral_gff || params.annotate_flu_ref || params.use_independant_gff) {
+    if(params.run_snpeff && (params.viral_gff || params.annotate_flu_ref || params.use_independant_gff)) {
         //
         // MODULE: Build snpeff db
         //
