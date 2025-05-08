@@ -2,3 +2,5 @@ pipeline_info/*.{html,json,txt,yml}
 01_qc/toulligqc/*/*.{data,html}
 01_qc/toulligqc/*/images/*.{data,html,js}
 05_ref_annotation/*.gff
+**/*.fastp.{log,html}
+**/*_fastqc.zip

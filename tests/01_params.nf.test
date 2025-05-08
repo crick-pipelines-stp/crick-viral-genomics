@@ -1,3 +1,7 @@
+"""
+Test parameter failures to ensure the pipeline fails gracefully
+"""
+
 nextflow_pipeline {
     name "Test Param Failures"
     script "../main.nf"

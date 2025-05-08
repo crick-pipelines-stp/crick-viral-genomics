@@ -1,3 +1,23 @@
+"""
+Test an aboslute minimal run to check for syntax errors etc.
+
+[-        ] process > MERGE_REFS                                                -
+[53/d5d5f9] process > SAMPLESHEET_CHECK (test_nanopore_cov_amp_min.csv)         [100%] 1 of 1 ✔
+[-        ] process > CAT_FASTQ                                                 -
+[82/3605c3] process > SAMTOOLS_FAIDX (SARS-CoV-2.fasta)                         [100%] 1 of 1 ✔
+[-        ] process > SAMTOOLS_INDEX_VIRUS                                      -
+[-        ] process > SAMTOOLS_FILTER_VIRUS                                     -
+[-        ] process > BAM_VIRAL_SORT_STATS:SAMTOOLS_SORT                        -
+[-        ] process > BAM_VIRAL_SORT_STATS:SAMTOOLS_INDEX                       -
+[-        ] process > BAM_VIRAL_SORT_STATS:BAM_STATS_SAMTOOLS:SAMTOOLS_STATS    -
+[-        ] process > BAM_VIRAL_SORT_STATS:BAM_STATS_SAMTOOLS:SAMTOOLS_FLAGSTAT -
+[-        ] process > BAM_VIRAL_SORT_STATS:BAM_STATS_SAMTOOLS:SAMTOOLS_IDXSTATS -
+[-        ] process > SEQKIT_BAM                                                -
+[-        ] process > SAMTOOLS_MPILEUP                                          -
+[-        ] process > GEN_COUNT_TABLE                                           -
+[-        ] process > MOSDEPTH                                                  -
+"""
+
 nextflow_pipeline {
     name "Test minimal end-to-end pipeline"
     script "../main.nf"

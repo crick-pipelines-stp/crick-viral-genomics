@@ -1,9 +1,14 @@
+"""
+Test cases for the preprocess components of the pipeline
+"""
+
 nextflow_pipeline {
     name "Test Pipeline Components"
     script "../main.nf"
 
     tag "preprocess"
 
+    // Test merging of single fastq files
     test("preprocess_cat_fastq_singles") {
         tag "preprocess/cat_fastq_singles"
         when {
@@ -33,6 +38,7 @@ nextflow_pipeline {
         }
     }
 
+    // Test merging of a folder of fastq files
     test("preprocess_cat_fastq_folder") {
         tag "preprocess/cat_fastq_folder"
         when {
@@ -62,6 +68,7 @@ nextflow_pipeline {
         }
     }
 
+    // Test illumina read trimming and QC
     test("preprocess_trim_illumina") {
         tag "preprocess/trim_illumina"
         when {
@@ -75,7 +82,14 @@ nextflow_pipeline {
             }
         }
         then {
-            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
+            def stable_name = getAllFilesFromDir(
+                params.outdir,
+                relative: true,
+                includeDir: true,
+                ignore: [
+                    'pipeline_info/*.{html,json,txt}',
+                    '**/*.fastp.log',
+                ])
             def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
             assertAll(
                 { assert workflow.success},
@@ -88,6 +102,7 @@ nextflow_pipeline {
         }
     }
 
+    // Test nanopore read trimming (no timming at the moment, just QC)
     test("preprocess_trim_nanopore") {
         tag "preprocess/trim_nanopore"
         when {
