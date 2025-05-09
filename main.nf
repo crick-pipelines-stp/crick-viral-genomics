@@ -689,29 +689,31 @@ workflow {
         ch_bam           = PICARD_MARKDUPLICATES.out.bam
     }
 
-    //
-    // SUBWORKFLOW: Sort, index BAM file and run samtools stats, flagstat and idxstats
-    //
-    BAM_VIRAL_SORT_STATS (
-        ch_bam,
-        [[],[]]
-    )
-    ch_versions          = ch_versions.mix(BAM_VIRAL_SORT_STATS.out.versions)
-    ch_bam               = BAM_VIRAL_SORT_STATS.out.bam
-    ch_bai               = BAM_VIRAL_SORT_STATS.out.bai
-    ch_multiqc_files     = ch_multiqc_files.mix(BAM_VIRAL_SORT_STATS.out.stats.collect{it[1]})
-    ch_multiqc_files     = ch_multiqc_files.mix(BAM_VIRAL_SORT_STATS.out.flagstat.collect{it[1]})
-    ch_multiqc_files     = ch_multiqc_files.mix(BAM_VIRAL_SORT_STATS.out.idxstats.collect{it[1]})
-    ch_report_data_align = BAM_VIRAL_SORT_STATS.out.flagstat.collect{it[1]}
+    if(params.run_seq_stats) {
+        //
+        // SUBWORKFLOW: Sort, index BAM file and run samtools stats, flagstat and idxstats
+        //
+        BAM_VIRAL_SORT_STATS (
+            ch_bam,
+            [[],[]]
+        )
+        ch_versions          = ch_versions.mix(BAM_VIRAL_SORT_STATS.out.versions)
+        ch_bam               = BAM_VIRAL_SORT_STATS.out.bam
+        ch_bai               = BAM_VIRAL_SORT_STATS.out.bai
+        ch_multiqc_files     = ch_multiqc_files.mix(BAM_VIRAL_SORT_STATS.out.stats.collect{it[1]})
+        ch_multiqc_files     = ch_multiqc_files.mix(BAM_VIRAL_SORT_STATS.out.flagstat.collect{it[1]})
+        ch_multiqc_files     = ch_multiqc_files.mix(BAM_VIRAL_SORT_STATS.out.idxstats.collect{it[1]})
+        ch_report_data_align = BAM_VIRAL_SORT_STATS.out.flagstat.collect{it[1]}
 
-    //
-    // MODULE: Calculate Seqkit stats
-    //
-    SEQKIT_BAM(
-        ch_bam
-    )
-    ch_versions   = ch_versions.mix(SEQKIT_BAM.out.versions)
-    ch_seqkit_tsv = SEQKIT_BAM.out.tsv
+        //
+        // MODULE: Calculate Seqkit stats
+        //
+        SEQKIT_BAM(
+            ch_bam
+        )
+        ch_versions   = ch_versions.mix(SEQKIT_BAM.out.versions)
+        ch_seqkit_tsv = SEQKIT_BAM.out.tsv
+    }
 
     //
     // CHANNEL: Join bam to bai
@@ -983,17 +985,6 @@ workflow {
         ch_count_table = GEN_COUNT_TABLE.out.csv
     }
 
-    //
-    // MODULE: Genome-wide coverage
-    //
-    MOSDEPTH (
-        ch_bam_bai_fasta_fai.map{[it[0], it[1], it[2], []]},
-        ch_bam_bai_fasta_fai.map{[it[0], it[3]]},
-    )
-    ch_versions             = ch_versions.mix(MOSDEPTH.out.versions)
-    ch_multiqc_files        = ch_multiqc_files.mix(MOSDEPTH.out.global_txt.collect{it[1]})
-    ch_report_data_coverage = MOSDEPTH.out.per_base_bed.collect{it[1]}
-
     if(params.run_nanopore_varcall || params.run_illumina_varcall) {
         //
         // MODULE: Merge ref and conesensus seq into one file
@@ -1071,6 +1062,17 @@ workflow {
     }
 
     if(params.run_reporting) {
+        //
+        // MODULE: Genome-wide coverage
+        //
+        MOSDEPTH (
+            ch_bam_bai_fasta_fai.map{[it[0], it[1], it[2], []]},
+            ch_bam_bai_fasta_fai.map{[it[0], it[3]]},
+        )
+        ch_versions             = ch_versions.mix(MOSDEPTH.out.versions)
+        ch_multiqc_files        = ch_multiqc_files.mix(MOSDEPTH.out.global_txt.collect{it[1]})
+        ch_report_data_coverage = MOSDEPTH.out.per_base_bed.collect{it[1]}
+
         //
         // CHANNEL: Prepare VCF files for report
         //

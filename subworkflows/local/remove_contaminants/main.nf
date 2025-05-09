@@ -71,6 +71,7 @@ workflow REMOVE_CONTAMINANTS {
     // MODULE: Generate index
     //
     ch_contam_index = Channel.empty()
+    ch_contam_bam   = Channel.empty()
     if (mode == "illumina") {
         // BWA_INDEX_HOST (ch_merged_refs )
         // ch_versions   = ch_versions.mix(BWA_INDEX_HOST.out.versions)

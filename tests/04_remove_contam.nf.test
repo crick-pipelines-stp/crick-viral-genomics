@@ -2,10 +2,10 @@ nextflow_pipeline {
     name "Test Pipeline Components"
     script "../main.nf"
 
-    tag "remove_host"
+    tag "remove_contam"
 
     test("remove_host_illumina") {
-        tag "remove_host/illumina"
+        tag "remove_contam/host_illumina"
         when {
             params {
                 run_remove_host_reads = true
@@ -32,7 +32,7 @@ nextflow_pipeline {
     }
 
     test("remove_host_nanopore") {
-        tag "remove_host/nanopore"
+        tag "remove_contam/host_nanopore"
         when {
             params {
                 run_remove_host_reads = true
@@ -43,6 +43,36 @@ nextflow_pipeline {
                 outdir      = "$outputDir"
                 viral_fasta = "$projectDir/tests/data/seq_sim/influenza_A/*"
                 samplesheet = "$projectDir/tests/data/samplesheets/test_illumina_flu_amp_single.csv"
+            }
+        }
+        then {
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
+            def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
+            assertAll(
+                { assert workflow.success},
+                { assert snapshot(
+                    workflow.trace.succeeded().size(),
+                    stable_name,
+                    stable_path
+                ).match() }
+            )
+        }
+    }
+
+    test("remove_contam_nanopore") {
+        tag "remove_contam/contam_nanopore"
+        when {
+            params {
+                use_independant_refs         = true
+                run_remove_contaminant_reads = true
+                run_minimap_align            = true
+                run_seq_stats                = false
+                run_gen_count_table          = false
+                run_reporting                = false
+
+                outdir            = "$outputDir"
+                samplesheet       = "$projectDir/tests/data/samplesheets/test_vectorcore_aav.csv"
+                contaminant_fasta = "$projectDir/tests/data/aav/aav_contaminants.fasta"
             }
         }
         then {
