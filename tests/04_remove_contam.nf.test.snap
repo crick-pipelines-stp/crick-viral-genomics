@@ -1,0 +1,123 @@
+{
+    "remove_host_nanopore": {
+        "content": [
+            26,
+            [
+                "00_reference",
+                "00_reference/viral_reference.merged.fasta",
+                "00_reference/viral_reference.merged.fasta.fai",
+                "01_qc",
+                "01_qc/mosdepth",
+                "01_qc/mosdepth/51-A_Spain_1810_2024_S51.mosdepth.global.dist.txt",
+                "01_qc/mosdepth/51-A_Spain_1810_2024_S51.mosdepth.region.dist.txt",
+                "01_qc/mosdepth/51-A_Spain_1810_2024_S51.mosdepth.summary.txt",
+                "01_qc/mosdepth/51-A_Spain_1810_2024_S51.per-base.bed.gz",
+                "01_qc/mosdepth/51-A_Spain_1810_2024_S51.per-base.bed.gz.csi",
+                "01_qc/mosdepth/51-A_Spain_1810_2024_S51.regions.bed.gz",
+                "01_qc/mosdepth/51-A_Spain_1810_2024_S51.regions.bed.gz.csi",
+                "02_contaminant_removal",
+                "02_contaminant_removal/51-A_Spain_1810_2024_S51.host.sorted.bam",
+                "02_contaminant_removal/51-A_Spain_1810_2024_S51.host.sorted.bam.bai",
+                "02_contaminant_removal/host_stats",
+                "02_contaminant_removal/host_stats/51-A_Spain_1810_2024_S51.host.flagstat",
+                "02_contaminant_removal/host_stats/51-A_Spain_1810_2024_S51.host.idxstats",
+                "02_contaminant_removal/host_stats/51-A_Spain_1810_2024_S51.host.stats",
+                "03_viral_reads",
+                "03_viral_reads/01_host_removed",
+                "03_viral_reads/01_host_removed/51-A_Spain_1810_2024_S51.viral_1.fastq.gz",
+                "03_viral_reads/01_host_removed/51-A_Spain_1810_2024_S51.viral_2.fastq.gz",
+                "03_viral_reads/01_host_removed/51-A_Spain_1810_2024_S51.viral_other.fastq.gz",
+                "06_alignment",
+                "06_alignment/51-A_Spain_1810_2024_S51.viral.sorted.bam",
+                "06_alignment/51-A_Spain_1810_2024_S51.viral.sorted.bam.bai",
+                "06_alignment/seqkit",
+                "06_alignment/seqkit/51-A_Spain_1810_2024_S51.bam_info.tsv",
+                "06_alignment/stats",
+                "06_alignment/stats/51-A_Spain_1810_2024_S51.viral.flagstat",
+                "06_alignment/stats/51-A_Spain_1810_2024_S51.viral.idxstats",
+                "06_alignment/stats/51-A_Spain_1810_2024_S51.viral.stats",
+                "06_alignment/unfiltered",
+                "06_alignment/unfiltered/51-A_Spain_1810_2024_S51.bam",
+                "08_consensus",
+                "08_consensus/count_tables",
+                "08_consensus/count_tables/51-A_Spain_1810_2024_S51.count_table.csv",
+                "08_consensus/pileup",
+                "08_consensus/pileup/51-A_Spain_1810_2024_S51.mpileup",
+                "pipeline_info"
+            ],
+            [
+                "viral_reference.merged.fasta:md5,887fe7e90382b03d3e9aabb2b03f2ede",
+                "viral_reference.merged.fasta.fai:md5,c1207acbd8f4d0ce7d301a735c40b378",
+                "51-A_Spain_1810_2024_S51.mosdepth.global.dist.txt:md5,dca97d5fa76a3dc2b004a143e466936f",
+                "51-A_Spain_1810_2024_S51.mosdepth.region.dist.txt:md5,8e579b9ef2c5544489ecbfcdadb5dce9",
+                "51-A_Spain_1810_2024_S51.mosdepth.summary.txt:md5,7c96a61fac0bbf2cc2fb2a984fd5dcb3",
+                "51-A_Spain_1810_2024_S51.per-base.bed.gz:md5,1b241eed51ac1c3ffbcd49845e80d8c8",
+                "51-A_Spain_1810_2024_S51.per-base.bed.gz.csi:md5,09867abb566bfe76b1c2b580505e47a6",
+                "51-A_Spain_1810_2024_S51.regions.bed.gz:md5,9ce40b4c90bc0156f5d0b3cf87b89319",
+                "51-A_Spain_1810_2024_S51.regions.bed.gz.csi:md5,854f86674d718000a248f5a6f22fd629",
+                "51-A_Spain_1810_2024_S51.host.sorted.bam:md5,0ccc97295ebd3a3f1f5902062aad22a2",
+                "51-A_Spain_1810_2024_S51.host.sorted.bam.bai:md5,0b7739ae61977339522f05ea8be91cef",
+                "51-A_Spain_1810_2024_S51.host.flagstat:md5,e2ab779358cbb754f62bcbf11d01e700",
+                "51-A_Spain_1810_2024_S51.host.idxstats:md5,0cbe57910873f609f35fe6ffca9c0c71",
+                "51-A_Spain_1810_2024_S51.host.stats:md5,43e55084a25f3eb12987cc8890500517",
+                "51-A_Spain_1810_2024_S51.viral_1.fastq.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "51-A_Spain_1810_2024_S51.viral_2.fastq.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "51-A_Spain_1810_2024_S51.viral_other.fastq.gz:md5,191525c0ffdcde8cfc10c17f32a84167",
+                "51-A_Spain_1810_2024_S51.viral.sorted.bam:md5,888b8dfe8a097d9f5c84e2553fc7f8f3",
+                "51-A_Spain_1810_2024_S51.viral.sorted.bam.bai:md5,abe7998384516f7b1bb1713b1c4efc3b",
+                "51-A_Spain_1810_2024_S51.bam_info.tsv:md5,f8951ad6678e94ad9a8720d0092b78b4",
+                "51-A_Spain_1810_2024_S51.viral.flagstat:md5,8b36178c74a9c93277fa9af4b9ddaf00",
+                "51-A_Spain_1810_2024_S51.viral.idxstats:md5,d272b239bdef3ab2052c99b5f9fb9480",
+                "51-A_Spain_1810_2024_S51.viral.stats:md5,4d0e37ec4aa6e726102525717aa36cee",
+                "51-A_Spain_1810_2024_S51.bam:md5,edc8c8116f86570e3388597b3dbb184f",
+                "51-A_Spain_1810_2024_S51.count_table.csv:md5,0051e115ff07f394e2cd516c1bd3908d",
+                "51-A_Spain_1810_2024_S51.mpileup:md5,271ab1e3a6e1670670cd927614503c62"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.0"
+        },
+        "timestamp": "2025-05-09T10:58:54.959326"
+    },
+    "remove_host_illumina": {
+        "content": [
+            12,
+            [
+                "00_reference",
+                "00_reference/viral_reference.merged.fasta",
+                "00_reference/viral_reference.merged.fasta.fai",
+                "02_contaminant_removal",
+                "02_contaminant_removal/51-A_Spain_1810_2024_S51.host.sorted.bam",
+                "02_contaminant_removal/51-A_Spain_1810_2024_S51.host.sorted.bam.bai",
+                "02_contaminant_removal/host_stats",
+                "02_contaminant_removal/host_stats/51-A_Spain_1810_2024_S51.host.flagstat",
+                "02_contaminant_removal/host_stats/51-A_Spain_1810_2024_S51.host.idxstats",
+                "02_contaminant_removal/host_stats/51-A_Spain_1810_2024_S51.host.stats",
+                "03_viral_reads",
+                "03_viral_reads/01_host_removed",
+                "03_viral_reads/01_host_removed/51-A_Spain_1810_2024_S51.viral_1.fastq.gz",
+                "03_viral_reads/01_host_removed/51-A_Spain_1810_2024_S51.viral_2.fastq.gz",
+                "03_viral_reads/01_host_removed/51-A_Spain_1810_2024_S51.viral_other.fastq.gz",
+                "pipeline_info"
+            ],
+            [
+                "viral_reference.merged.fasta:md5,887fe7e90382b03d3e9aabb2b03f2ede",
+                "viral_reference.merged.fasta.fai:md5,c1207acbd8f4d0ce7d301a735c40b378",
+                "51-A_Spain_1810_2024_S51.host.sorted.bam:md5,0906ce95887672ec727188ab0a077bed",
+                "51-A_Spain_1810_2024_S51.host.sorted.bam.bai:md5,3163f45f9b29e79a55e8af63fbc504dd",
+                "51-A_Spain_1810_2024_S51.host.flagstat:md5,72b8602022c7a35067db07eefcc74592",
+                "51-A_Spain_1810_2024_S51.host.idxstats:md5,b9e7d4b384ff996afa680d7706ef3498",
+                "51-A_Spain_1810_2024_S51.host.stats:md5,f4bdbb91e08e2ca614fe7a8c47672a2b",
+                "51-A_Spain_1810_2024_S51.viral_1.fastq.gz:md5,d2fd722c94dfff3e032c06f71e9017e1",
+                "51-A_Spain_1810_2024_S51.viral_2.fastq.gz:md5,93e6c026d7d3ba2c3a2f4fdcae52754c",
+                "51-A_Spain_1810_2024_S51.viral_other.fastq.gz:md5,d41d8cd98f00b204e9800998ecf8427e"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.0"
+        },
+        "timestamp": "2025-05-09T10:58:16.160807"
+    }
+}
