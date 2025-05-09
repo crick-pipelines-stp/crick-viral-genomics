@@ -17,6 +17,7 @@ _saved_results/
 extra_data/
 testing/
 testing*
+.lineage/
 
 # nf-test
 .nf-test/
