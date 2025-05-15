@@ -1,4 +1,4 @@
 id,read1,read2,ref,gff
-P220,/Users/cheshic/dev/test_data/viral/aav/P220.filtered.merged.fastq.gz,,/Users/cheshic/dev/test_data/viral/aav/P220_AAV.fa,/Users/cheshic/dev/test_data/viral/aav/P220_AAV_features.txt
-P281,/Users/cheshic/dev/test_data/viral/aav/P281.filtered.merged.fastq.gz,,/Users/cheshic/dev/test_data/viral/aav/P281_AAV.fa,/Users/cheshic/dev/test_data/viral/aav/P281_AAV_features.txt
-P671,/Users/cheshic/dev/test_data/viral/aav/P671.filtered.merged.fastq.gz,,/Users/cheshic/dev/test_data/viral/aav/P671_AAV.fa,/Users/cheshic/dev/test_data/viral/aav/P671_AAV_features.txt
+P220,/Users/cheshic/dev/test_data/viral/aav/p_runs/fullcircle/P220.fastq.gz,,/Users/cheshic/dev/test_data/viral/aav/p_runs/P220_AAV.fa,/Users/cheshic/dev/test_data/viral/aav/p_runs/P220_AAV_features.txt
+P281,/Users/cheshic/dev/test_data/viral/aav/p_runs/fullcircle/P281.fastq.gz,,/Users/cheshic/dev/test_data/viral/aav/p_runs/P281_AAV.fa,/Users/cheshic/dev/test_data/viral/aav/p_runs/P281_AAV_features.txt
+P671,/Users/cheshic/dev/test_data/viral/aav/p_runs/fullcircle/P671.fastq.gz,,/Users/cheshic/dev/test_data/viral/aav/p_runs/P671_AAV.fa,/Users/cheshic/dev/test_data/viral/aav/p_runs/P671_AAV_features.txt
