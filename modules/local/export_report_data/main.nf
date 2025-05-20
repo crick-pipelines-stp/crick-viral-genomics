@@ -2,7 +2,7 @@ process EXPORT_REPORT_DATA {
     tag "$run_id"
     label 'process_single'
 
-    container "docker.io/thecrick/pipetech_genome_tools:0.4.65"
+    container "docker.io/thecrick/pipetech_genome_tools:0.5.13"
 
     input:
     val(run_id)

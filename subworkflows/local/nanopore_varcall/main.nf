@@ -12,7 +12,8 @@ include { ARTIC_MAKE_DEPTH_MASK                } from '../../../modules/local/ar
 include { ARTIC_MASK                           } from '../../../modules/local/artic/mask/main'
 include { BCFTOOLS_CONSENSUS                   } from '../../../modules/nf-core/bcftools/consensus/main'
 include { CLAIR3_RUN                           } from '../../../modules/local/clair3/main'
-include { GUNZIP as GUNZIP_CLAIR3_VCF          } from '../../../modules/nf-core/gunzip/main'
+include { BCFTOOLS_VIEW as CLAIR3_FILTER_REF   } from '../../../modules/nf-core/bcftools/view/main'
+// include { GUNZIP as GUNZIP_CLAIR3_VCF          } from '../../../modules/nf-core/gunzip/main'
 include { LOFREQ_CALL                          } from '../../../modules/local/lofreq/call/main'
 include { TABIX_BGZIPTABIX as INDEX_LOFREQ_VCF } from '../../../modules/nf-core/tabix/bgziptabix/main'
 include { SNIFFLES                             } from '../../../modules/nf-core/sniffles/main'
@@ -227,18 +228,27 @@ workflow NANOPORE_VARCALL {
     )
     ch_versions          = ch_versions.mix(CLAIR3_RUN.out.versions)
     ch_clair3_vcf_gz_tbi = CLAIR3_RUN.out.merge_output_gz_tbi
-    ch_clair3_vcf_unzip  = CLAIR3_RUN.out.pileup_gz_tbi
-                            .mix(CLAIR3_RUN.out.full_alignment_gz_tbi)
-                            .mix(CLAIR3_RUN.out.merge_output_gz_tbi)
+    ch_clair3_vcf_unzip  = CLAIR3_RUN.out.merge_output_gz_tbi
+
+    //
+    // MODULE: filter ref calls from clair3
+    //
+    CLAIR3_FILTER_REF (
+        ch_clair3_vcf_gz_tbi,
+        [],
+        [],
+        []
+    )
+    ch_clair3_vcf = CLAIR3_FILTER_REF.out.vcf
 
     //
     // MODULE: Unzip clair3 VCF files
     //
-    GUNZIP_CLAIR3_VCF (
-        ch_clair3_vcf_unzip.map{[it[0], it[1]]}
-    )
-    ch_versions   = ch_versions.mix(GUNZIP_CLAIR3_VCF.out.versions)
-    ch_clair3_vcf = GUNZIP_CLAIR3_VCF.out.gunzip
+    // GUNZIP_CLAIR3_VCF (
+    //     ch_clair3_vcf_unzip.map{[it[0], it[1]]}
+    // )
+    // ch_versions   = ch_versions.mix(GUNZIP_CLAIR3_VCF.out.versions)
+    // ch_clair3_vcf = GUNZIP_CLAIR3_VCF.out.gunzip
 
     //
     // MODULE: Call low frequency variants
@@ -300,7 +310,7 @@ workflow NANOPORE_VARCALL {
     // CHANNEL: Generate merged vcf report channels
     //
     ch_vcf_files = ch_medaka_vcf.map{[it[0], it[1], "medaka", 1]}
-        .mix(ch_clair3_vcf.filter{it[1].toString().contains("merge_output")}.map{[it[0], it[1], "clair3", 2]})
+        .mix(ch_clair3_vcf.map{[it[0], it[1], "clair3", 2]})
         .mix(ch_lofreq_vcf.map{[it[0], it[1], "lofreq", 3]})
 
     emit:
