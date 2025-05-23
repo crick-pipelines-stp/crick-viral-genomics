@@ -25,6 +25,7 @@ process EXPORT_REPORT_DATA {
     output:
     path("*.pkl"), emit: pkl
     path("*.sh") , emit: sh
+    path("*.csv"), emit: csv
 
     when:
     task.ext.when == null || task.ext.when
@@ -56,5 +57,10 @@ process EXPORT_REPORT_DATA {
     with open(rep_path, "w") as f:
         f.write(run_script)
     os.chmod(rep_path, 0o755)
+
+    for sample in parser.dataframe_dict["coverage_per_base"].keys():
+        print(parser.dataframe_dict[sample].keys())
+        df = parser.dataframe_dict[sample]["variants"]
+        df.to_csv("merged_variants.csv", index=False)
     """
 }
